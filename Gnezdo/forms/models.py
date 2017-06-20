@@ -18,6 +18,5 @@ class BaseForm(models.Model):
 class SeekerForm(BaseForm):
     aditionalText = models.TextField(null=True, default='')
 
-
 class OwnerForm(BaseForm):
     aditionalText = models.TextField(null=True, default='')

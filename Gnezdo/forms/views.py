@@ -1,5 +1,6 @@
 from rest_framework import generics
 from .models import SeekerForm, OwnerForm
+from .permissions import IsOwnerOrReadOnly
 from .serializers import SeekerFormSerializer, OwnerFormSerializer
 from rest_framework import permissions
 import pdb
@@ -21,8 +22,13 @@ class SeekerFormList(generics.ListCreateAPIView):
     #         return Response(serializer.data, status=status.HTTP_201_CREATED)
     #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class SeekerFormDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
+    queryset = SeekerForm.objects.all()
+    serializer_class = SeekerFormSerializer
+
 
 class OwnerFormList(generics.ListCreateAPIView):
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
     queryset = OwnerForm.objects.all()
     serializer_class = OwnerFormSerializer
