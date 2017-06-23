@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import BaseForm, SeekerForm, OwnerForm
-
+from django.contrib.auth import get_user_model
 
 # class BaseFormSerializer(serializers.ModelSerializer)):
 

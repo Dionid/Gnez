@@ -1,6 +1,7 @@
 from rest_framework import generics
 from .models import SeekerForm, OwnerForm
 from .permissions import IsOwnerOrReadOnly
+from django.contrib.auth import get_user_model
 from .serializers import SeekerFormSerializer, OwnerFormSerializer
 from rest_framework import permissions
 import pdb

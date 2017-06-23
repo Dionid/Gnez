@@ -21,4 +21,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api-token-auth', obtain_jwt_token),
     url(r'^forms/', include('forms.urls')),
+    # url(r'^oauth/', include('social_django.urls', namespace='social')),
+    url(r'^gnauth/', include('gnAuth.urls')),
 ]

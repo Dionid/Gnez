@@ -4,14 +4,15 @@ from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
 from django.utils.translation import ugettext_lazy as _
-
+import pdb
 
 class GnUserManager(BaseUserManager):
-    def _create_user(self, email, password, is_staff, is_admin, **extra_fields):
-            if not email:
+    def _create_user(self, email, username, password, is_staff, is_admin, **extra_fields):
+            if not username:
                 raise ValueError('The given email must be set')
 
             user = self.model(
+                username = username,
                 email = self.normalize_email(email),
                 is_staff = is_staff,
                 is_active = True,
@@ -24,11 +25,12 @@ class GnUserManager(BaseUserManager):
             user.save(using=self._db)
             return user
 
-    def create_user(self, email, password = None, **extra_fields):
-        return self._create_user(email, password, False, False, **extra_fields)
+    def create_user(self, username, password = None, **extra_fields):
+        pbd.start_trace()
+        return self._create_user(username, password, False, False, **extra_fields)
 
-    def create_superuser(self, email, password = None, **extra_fields):
-        return self._create_user(email, password, True, True, **extra_fields)
+    def create_superuser(self, username, password = None, **extra_fields):
+        return self._create_user(username, password, True, True, **extra_fields)
 
 
 class GnUser(AbstractBaseUser):
@@ -37,7 +39,7 @@ class GnUser(AbstractBaseUser):
         max_length=255,
         unique=True,
     )
-    username = models.CharField(max_length=250, blank=True)
+    username = models.CharField(max_length=250, unique=True)
     first_name = models.CharField(max_length=250, blank=True)
     second_name = models.CharField(max_length=250, blank=True)
     third_name = models.CharField(max_length=250, blank=True)
@@ -45,10 +47,11 @@ class GnUser(AbstractBaseUser):
     is_active   = models.BooleanField(default=True)
     is_admin    = models.BooleanField(default=False)
     is_staff    = models.BooleanField(default=False)
+    # vk_id = models.
 
     objects = GnUserManager()
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'username'
 
     class Meta:
         verbose_name = _('user')
