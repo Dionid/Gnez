@@ -27,7 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -39,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'forms.apps.FormsConfig',
-    'auth.apps.AuthConfig'
+    'gnAuth.apps.GnauthConfig',
+    'profiles.apps.ProfilesConfig',
 ]
 
 MIDDLEWARE = [
@@ -54,7 +54,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'Gnezdo.urls'
 
-# AUTH_USER_MODEL = 'auth.User'
+AUTH_USER_MODEL = 'gnAuth.GnUser'
 
 TEMPLATES = [
     {
